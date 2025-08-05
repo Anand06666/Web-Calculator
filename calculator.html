@@ -1,0 +1,158 @@
+<!-- Modern Calculator using HTML, CSS, and JS -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Modern Calculator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      /* Set background image and gradient overlay */
+      background: 
+        linear-gradient(135deg, #1d0e06cc 0%, #3b3b3bcc 100%),
+        url('WhatsApp_Image_2025-02-05_at_06.37.52[1].jpg') no-repeat center center fixed;
+      background-size: cover;
+      position: relative;
+    }
+    .bg-credit {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      font-size: 1.1em;
+      color: #fff;
+      letter-spacing: 2px;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      opacity: 0.8;
+      z-index: 2;
+      pointer-events: none;
+      text-shadow: 0 2px 8px #22223b;
+      top: auto;
+      bottom: 10px;
+    }
+    .calculator {
+      background: #22223b;
+      border-radius: 18px;
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+      padding: 30px 20px 20px 20px;
+      width: 320px;
+      max-width: 95vw;
+      z-index: 3;
+    }
+    .display {
+      width: 100%;
+      height: 60px;
+      background: #4a4e69;
+      border: none;
+      border-radius: 10px;
+      margin-bottom: 18px;
+      font-size: 2em;
+      color: #fff;
+      text-align: right;
+      padding: 0 15px;
+      box-sizing: border-box;
+      letter-spacing: 1px;
+      outline: none;
+    }
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    .btn {
+      padding: 18px 0;
+      font-size: 1.2em;
+      border: none;
+      border-radius: 8px;
+      background: #f2e9e4;
+      color: #22223b;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      font-weight: 600;
+    }
+    .btn.operator {
+      background: #9f86c0;
+      color: #fff;
+    }
+    .btn.equal {
+      background: #5f6caf;
+      color: #fff;
+      grid-column: span 2;
+    }
+    .btn.clear {
+      background: #e07a5f;
+      color: #fff;
+    }
+    .btn:active {
+      background: #c9ada7;
+    }
+    @media (max-width: 400px) {
+      .calculator { padding: 15px 5px; }
+      .display { font-size: 1.2em; height: 40px; }
+      .btn { padding: 12px 0; font-size: 1em; }
+      .bg-credit { font-size: 0.9em; }
+    }
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <input type="text" id="display" class="display" readonly>
+    <div class="buttons">
+      <button class="btn clear" onclick="clearDisplay()">C</button>
+      <button class="btn operator" onclick="append('/')">÷</button>
+      <button class="btn operator" onclick="append('*')">×</button>
+      <button class="btn operator" onclick="append('-')">−</button>
+      <button class="btn" onclick="append('7')">7</button>
+      <button class="btn" onclick="append('8')">8</button>
+      <button class="btn" onclick="append('9')">9</button>
+      <button class="btn operator" onclick="append('+')">+</button>
+      <button class="btn" onclick="append('4')">4</button>
+      <button class="btn" onclick="append('5')">5</button>
+      <button class="btn" onclick="append('6')">6</button>
+      <button class="btn" onclick="backspace()">⌫</button>
+      <button class="btn" onclick="append('1')">1</button>
+      <button class="btn" onclick="append('2')">2</button>
+      <button class="btn" onclick="append('3')">3</button>
+      <button class="btn" onclick="append('.')">.</button>
+      <button class="btn" onclick="append('0')">0</button>
+      <button class="btn equal" onclick="calculate()">=</button>
+    </div>
+  </div>
+  <div class="bg-credit">
+    All rights reserved to Pasiware Technology Pvt Ltd
+  </div>
+  <script>
+    function append(char) {
+      const display = document.getElementById('display');
+      if (display.value === 'Error') display.value = '';
+      display.value += char;
+    }
+    function clearDisplay() {
+      document.getElementById('display').value = '';
+    }
+    function backspace() {
+      const display = document.getElementById('display');
+      display.value = display.value.slice(0, -1);
+    }
+    function calculate() {
+      const display = document.getElementById('display');
+      try {
+        // Only allow numbers and operators for safety
+        if (/^[0-9+\-*/.() ]+$/.test(display.value)) {
+          // eslint-disable-next-line no-eval
+          display.value = eval(display.value).toString();
+        } else {
+          display.value = 'Error';
+        }
+      } catch {
+        display.value = 'Error';
+      }
+    }
+  </script>
+</body>
+</html>
